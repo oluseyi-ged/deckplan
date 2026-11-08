@@ -1,11 +1,13 @@
 'use client';
 
 import { useRef } from 'react';
+import { HelpCircle } from 'lucide-react';
 import type { CameraMode, TransformMode } from '@/types/scene';
 import { useSceneStore } from '@/store/sceneStore';
 import { exportSceneJson, parseSceneJson } from '@/lib/persistence';
 import { createStarterScene } from '@/lib/starterScene';
 import { captureScreenshot } from '@/lib/screenshot';
+import { restartTour } from './OnboardingTour';
 
 const CAMERA_MODES: { mode: CameraMode; label: string }[] = [
   { mode: 'orbit', label: 'Orbit' },
@@ -63,10 +65,10 @@ export default function Toolbar() {
   };
 
   return (
-    <div className="flex h-12 items-center gap-2 border-b border-neutral-800 bg-neutral-900 px-4">
+    <div className="flex h-12 items-center gap-2 border-b border-neutral-800 bg-panel px-4">
       <span className="text-sm font-medium text-neutral-400">DeckPlan</span>
 
-      <div className="ml-6 flex gap-1 rounded-md bg-neutral-800 p-1">
+      <div data-tour="camera-modes" className="ml-6 flex gap-1 rounded-md bg-neutral-800 p-1">
         {CAMERA_MODES.map(({ mode, label }) => (
           <button
             key={mode}
@@ -209,6 +211,14 @@ export default function Toolbar() {
           className="rounded px-3 py-1 text-sm text-neutral-400 hover:text-white"
         >
           Screenshot
+        </button>
+        <button
+          type="button"
+          onClick={restartTour}
+          title="Show the guided tour again"
+          className="rounded p-1.5 text-neutral-400 hover:text-white"
+        >
+          <HelpCircle className="h-4 w-4" strokeWidth={1.75} />
         </button>
       </div>
     </div>

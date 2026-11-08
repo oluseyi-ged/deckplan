@@ -4,6 +4,7 @@ import Toolbar from './Toolbar';
 import Sidebar from './Sidebar';
 import Viewport from './Viewport';
 import SceneBootstrap from './SceneBootstrap';
+import OnboardingTour from './OnboardingTour';
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 
 export default function Editor() {
@@ -19,6 +20,7 @@ export default function Editor() {
           <Viewport />
         </div>
       </div>
+      <OnboardingTour />
     </div>
   );
 }

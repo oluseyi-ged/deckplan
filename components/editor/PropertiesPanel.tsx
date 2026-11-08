@@ -1,5 +1,6 @@
 'use client';
 
+import { Copy, Trash2 } from 'lucide-react';
 import { useSceneStore } from '@/store/sceneStore';
 import { OBJECT_REGISTRY } from '@/components/objects/registry';
 import { resolveRestingY } from '@/lib/geometry';
@@ -15,8 +16,8 @@ export default function PropertiesPanel() {
   const obj = objects.find((o) => o.id === selectedId);
   if (!obj) {
     return (
-      <div className="border-t border-neutral-800 p-3">
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+      <div className="border-t border-neutral-800 p-3.5">
+        <h2 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-neutral-500">
           Properties
         </h2>
         <p className="text-xs text-neutral-600">Nothing selected.</p>
@@ -24,19 +25,20 @@ export default function PropertiesPanel() {
     );
   }
 
-  const { PropertiesFields } = OBJECT_REGISTRY[obj.type];
+  const { PropertiesFields, icon: Icon, label: typeLabel } = OBJECT_REGISTRY[obj.type];
 
   return (
-    <div className="space-y-3 overflow-y-auto border-t border-neutral-800 p-3">
-      <h2 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
-        Properties
+    <div className="space-y-3.5 overflow-y-auto border-t border-neutral-800 p-3.5">
+      <h2 className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-neutral-500">
+        <Icon className="h-3 w-3" strokeWidth={2} />
+        {typeLabel}
       </h2>
 
       <input
         type="text"
         value={obj.name}
         onChange={(e) => updateObject(obj.id, { name: e.target.value })}
-        className="w-full rounded border border-neutral-700 bg-neutral-800 px-2 py-1 text-sm text-neutral-200"
+        className="w-full rounded-md border border-neutral-700 bg-neutral-800 px-2.5 py-1.5 text-sm text-neutral-200 outline-none focus:border-sky-600"
       />
 
       <div className="space-y-2">
@@ -69,7 +71,7 @@ export default function PropertiesPanel() {
         />
       </div>
 
-      <div className="space-y-2 border-t border-neutral-800 pt-2">
+      <div className="space-y-2 border-t border-neutral-800 pt-3">
         <NumberField
           label="Width"
           value={obj.dimensions.width}
@@ -100,7 +102,7 @@ export default function PropertiesPanel() {
       </div>
 
       {PropertiesFields && (
-        <div className="border-t border-neutral-800 pt-2">
+        <div className="border-t border-neutral-800 pt-3">
           <PropertiesFields
             obj={obj as never}
             onPropsChange={(patch) => updateObject(obj.id, { props: patch })}
@@ -108,19 +110,21 @@ export default function PropertiesPanel() {
         </div>
       )}
 
-      <div className="flex gap-2 border-t border-neutral-800 pt-2">
+      <div className="flex gap-2 border-t border-neutral-800 pt-3">
         <button
           type="button"
           onClick={() => duplicateObject(obj.id)}
-          className="flex-1 rounded bg-neutral-800 px-2 py-1.5 text-xs text-neutral-200 hover:bg-neutral-700"
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-md bg-neutral-800 px-2 py-1.5 text-xs text-neutral-200 transition-colors hover:bg-neutral-700"
         >
+          <Copy className="h-3.5 w-3.5" strokeWidth={1.75} />
           Duplicate
         </button>
         <button
           type="button"
           onClick={() => removeObject(obj.id)}
-          className="flex-1 rounded bg-red-900/60 px-2 py-1.5 text-xs text-red-200 hover:bg-red-900"
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-md bg-red-950/60 px-2 py-1.5 text-xs text-red-300 transition-colors hover:bg-red-900/60"
         >
+          <Trash2 className="h-3.5 w-3.5" strokeWidth={1.75} />
           Delete
         </button>
       </div>

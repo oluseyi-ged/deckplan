@@ -31,7 +31,7 @@ export default function Viewport() {
   useEffect(() => () => registerCanvas(null), []);
 
   return (
-    <div className="relative h-full w-full">
+    <div data-tour="viewport" className="relative h-full w-full">
       <Canvas
         shadows
         gl={{ preserveDrawingBuffer: true }}

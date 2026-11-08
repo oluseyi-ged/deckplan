@@ -1,4 +1,24 @@
 import type { ComponentType } from 'react';
+import {
+  Armchair,
+  Box,
+  Camera,
+  GitCommitHorizontal,
+  Guitar,
+  Layers,
+  Lightbulb,
+  Mic,
+  PanelTop,
+  Piano as PianoIcon,
+  Speaker,
+  Tv,
+  User,
+  Users,
+  Video,
+  Volume2,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react';
 import type { Dimensions, ObjectType, PropsForType, SceneObject } from '@/types/scene';
 import StageObject from './StageObject';
 import DrumRiserObject from './DrumRiserObject';
@@ -16,10 +36,19 @@ import MonitorObject, { MonitorFields } from './MonitorObject';
 
 export type ObjectCategory = 'structure' | 'av' | 'people' | 'lighting' | 'camera';
 
+export const CATEGORY_ICON: Record<ObjectCategory, LucideIcon> = {
+  structure: Layers,
+  av: Speaker,
+  people: Users,
+  lighting: Lightbulb,
+  camera: Video,
+};
+
 export type ObjectDefinition<T extends ObjectType> = {
   type: T;
   label: string;
   category: ObjectCategory;
+  icon: LucideIcon;
   defaultDimensions: Dimensions;
   defaultColor: string;
   defaultProps: PropsForType[T];
@@ -37,6 +66,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'stage',
     label: 'Main Stage',
     category: 'structure',
+    icon: Layers,
     defaultDimensions: { width: 12, depth: 8, height: 1.2 },
     defaultColor: '#8a8a8a',
     defaultProps: {},
@@ -46,6 +76,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'drumRiser',
     label: 'Drum Riser',
     category: 'structure',
+    icon: Box,
     defaultDimensions: { width: 2.4, depth: 2.4, height: 0.6 },
     defaultColor: '#6b6b6b',
     defaultProps: {},
@@ -55,6 +86,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'ledWall',
     label: 'LED Wall',
     category: 'av',
+    icon: PanelTop,
     defaultDimensions: { width: 10, depth: 0.15, height: 5.6 },
     defaultColor: '#0a0a1a',
     defaultProps: { testPattern: true, tileSize: 0.5 },
@@ -65,6 +97,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'seatingSection',
     label: 'Seating Section',
     category: 'people',
+    icon: Armchair,
     defaultDimensions: { width: 5.5, depth: 4.8, height: 0.9 },
     defaultColor: '#3a4a6b',
     defaultProps: {
@@ -86,6 +119,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'micStand',
     label: 'Mic Stand',
     category: 'av',
+    icon: Mic,
     defaultDimensions: { width: 0.3, depth: 0.3, height: 1.4 },
     defaultColor: '#2a2a2a',
     defaultProps: { style: 'straight' },
@@ -96,6 +130,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'piano',
     label: 'Piano',
     category: 'av',
+    icon: PianoIcon,
     defaultDimensions: { width: 1.5, depth: 1.4, height: 1.0 },
     defaultColor: '#1c1917',
     defaultProps: {},
@@ -105,6 +140,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'guitarAmp',
     label: 'Guitar Amp',
     category: 'av',
+    icon: Guitar,
     defaultDimensions: { width: 0.6, depth: 0.3, height: 0.6 },
     defaultColor: '#2e2a26',
     defaultProps: {},
@@ -114,6 +150,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'monitorWedge',
     label: 'Monitor Wedge',
     category: 'av',
+    icon: Volume2,
     defaultDimensions: { width: 0.5, depth: 0.4, height: 0.3 },
     defaultColor: '#1a1a1a',
     defaultProps: {},
@@ -123,6 +160,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'trussSegment',
     label: 'Truss Segment',
     category: 'structure',
+    icon: GitCommitHorizontal,
     defaultDimensions: { width: 3, depth: 0.3, height: 0.3 },
     defaultColor: '#9ca3af',
     defaultProps: {},
@@ -132,6 +170,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'performer',
     label: 'Performer',
     category: 'people',
+    icon: User,
     defaultDimensions: { width: 0.5, depth: 0.35, height: 1.7 },
     defaultColor: '#4b5563',
     defaultProps: { role: 'vocalist' },
@@ -142,6 +181,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'movingHeadLight',
     label: 'Moving Head',
     category: 'lighting',
+    icon: Zap,
     defaultDimensions: { width: 0.3, depth: 0.3, height: 0.4 },
     defaultColor: '#1f2937',
     defaultProps: { tiltSide: 0, tiltForward: 0, beamAngle: 18, beamLength: 6, beamColor: '#60a5fa', beamOn: true },
@@ -152,6 +192,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'placedCamera',
     label: 'Camera',
     category: 'camera',
+    icon: Camera,
     defaultDimensions: { width: 0.3, depth: 0.3, height: 1.5 },
     defaultColor: '#374151',
     defaultProps: { cameraType: 'static', fov: 50, jibHeight: 3, jibReach: 2 },
@@ -162,6 +203,7 @@ export const OBJECT_REGISTRY: { [K in ObjectType]: ObjectDefinition<K> } = {
     type: 'monitor',
     label: 'TV / Monitor',
     category: 'av',
+    icon: Tv,
     defaultDimensions: { width: 1.0, depth: 0.08, height: 0.6 },
     defaultColor: '#1e3a5f',
     defaultProps: { mountStyle: 'stand' },
